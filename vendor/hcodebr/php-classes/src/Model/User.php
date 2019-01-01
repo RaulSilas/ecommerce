@@ -12,6 +12,7 @@ class User extends Model {
 	const SECRET = "HcodePhp7_Secret";
 	const ERROR = "UserError";
 	const ERROR_REGISTER = "UserErrorRegister";
+	const SUCCESS = "UserSuccess";
 
 	protected $fields = [
 		"iduser", "idperson", "deslogin", "despassword", "inadmin", "dtregister", "desperson", "nrphone", "desemail" 
@@ -293,6 +294,25 @@ public function setPassword($password)
 		":password"=>$password,
 		":iduser"=>$this->getiduser()
 	));
+}
+
+public static function setSuccess($msg)
+{
+	$_SESSION[User::SUCCESS] = $msg;
+}
+
+public static function getSuccess()
+{
+	$msg = (isset($_SESSION[User::SUCCESS]) && $_SESSION[User::SUCCESS]) ? $_SESSION[User::SUCCESS]: "";
+
+	User::clearSuccess();
+
+	return $msg;
+}
+
+public static function clearSuccess()
+{
+	$_SESSION[User::SUCCESS] = NULL;
 }
 
 public static function setError($msg)
